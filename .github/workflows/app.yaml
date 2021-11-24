@@ -25,6 +25,8 @@ jobs:
 
       - name: GitHub Action for pylint
         uses: cclauss/GitHub-Action-for-pylint@0.7.0
+
+      - name: Run linting
         run: pylint src/app.py
 
       - name: Run unit tests
