@@ -36,6 +36,9 @@ jobs:
     env:
       ENV: dev
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -61,6 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ENV: dev
+      CLUSTER_NAME: hello-world-dev
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -79,4 +83,5 @@ jobs:
           ECR_REPOSITORY: hello-world
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          aws eks update-kubeconfig --name  ${{ env.CLUSTER_NAME }} --region ${{ env.REGION }}
           kubectl set-image deployment/hello-world hello-world=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
