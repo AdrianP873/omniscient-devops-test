@@ -38,7 +38,7 @@ resource "aws_eks_node_group" "nodegroup" {
   cluster_name    = var.cluster_name
   node_group_name = "eks-nodegroup-${var.environment}"
   node_role_arn   = aws_iam_role.worker_node_role.arn
-  subnet_ids      = concat(module.vpc.private_subnets, module.vpc.public_subnets)
+  subnet_ids      = module.vpc.private_subnets
 
   scaling_config {
     desired_size = var.node_group_desired_capacity
