@@ -60,3 +60,28 @@ jobs:
 
       - name: Plan Terraform
         run: scripts/terraform_plan.sh
+
+  apply-infra:
+    needs: plan-infra
+    runs-on: ubuntu-latest
+    env:
+      ENV: dev
+      VPC_ID: vpc-0aae7159e04d55201
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: v1.0
+
+      - name: Apply Terraform
+        run: scripts/terraform_apply.sh
