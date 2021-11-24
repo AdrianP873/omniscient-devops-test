@@ -1,9 +1,12 @@
+""" Flask application that returns a Hello World message """
+
 from flask import Flask
 
 app = Flask(__name__)
 
 @app.route("/hello")
 def hello_world():
+    """ Returns a Hello World message """
     return "Hello World"
 
 if __name__ == "__main__":
