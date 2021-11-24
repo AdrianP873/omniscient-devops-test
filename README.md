@@ -13,6 +13,8 @@ You will find the infrastructure as code used to provision the cluster and assoc
 
 I used GitHub Actions to implement CI and CD. Check out the workflow yaml files inside the `.github/workflows` directory. Here you will find two separate pipelines; one validates and deploys the Terraform infrastructure and applies the base kubectl manifests such the Deployment and Service kubernetes objects, the other runs linting and unit tests on the web application source code, builds it into a docker image, pushes to a private repository, then performs a rolling update of the kubernetes Deployment with the newly built docker image.
 
+## Architecture
+![alt text](architecture.png)
 
 ## How to make this solution more production ready / What I would do if I had more time
 * For continuous delivery, my pipeline currently executes a `kubectl apply -f k8s/` after building the docker image, which deploys all of the kubernetes resources within the k8s directory. This approach does not scale well as tool usage grows, and can be difficult to manage. A better approach would be to implement a declarative GitOps tool such as ArgoCD or FluxCD to handle the continuous delivery.
@@ -23,7 +25,7 @@ I used GitHub Actions to implement CI and CD. Check out the workflow yaml files 
     - traffic/throughput (requests per second)
     - saturation (cpu,memory,disk IO of nodes and containers)
 * Standardise application deployments amongst teams through the use of helm charts
-* Implement an IngressController and ingress resources to handle routing to internal services rather than a classic load balancer
+* Implement an IngressController and ingress resources to handle routing to internal services rather than a classic load balancer. Ingress with ALB would enable usage of WAF (Web application firewall) to protect against layer 7 attacks
 * Node and container logs should be shipped off the worker nodes to a centralised location like CloudWatch or Sumologic. 
 * Implement cluster autoscaler to scale worker nodes based on resource usage.
 * Implement Horizontal Pod Autoscaler to scale deployments on the application bottleneck 
