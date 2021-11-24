@@ -23,14 +23,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      - name: Run linting
+      - name: Run linting and run unit tests
         run: |
-          pip install pylint
+          pip install -r requirements.txt
+          pip install pylint pytest
           pylint src/app.py
-
-      - name: Run unit tests
-        run: |
-          pip install pytest
           pytest
 
   build-app:
