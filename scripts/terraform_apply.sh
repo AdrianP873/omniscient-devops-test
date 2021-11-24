@@ -5,6 +5,4 @@ cd infra
 
 terraform init -backend-config="env/backend.tfvars"
 
-terraform plan --var-file="env/${ENV}.tfvars"
-
-terraform show
+terraform apply --var-file="env/${ENV}.tfvars" -auto-approve
