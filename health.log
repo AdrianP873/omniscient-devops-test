@@ -1,0 +1,17 @@
+INFO:root:Healthy
+INFO:root:Healthy
+INFO:root:Healthy
+INFO:root:Healthy
+INFO:root:Healthy
+INFO:root:Healthy
+CRITICAL:root:Connection Timeout: HTTPConnectionPool(host='a7a350f9da27e4ec98d9489ce1842421-316934250.ap-southeast-2.elb.amazonaws.com', port=80): Read timed out. (read timeout=0.5)
+INFO:root:Connection timeout.
+CRITICAL:root:Connection Timeout: HTTPConnectionPool(host='a7a350f9da27e4ec98d9489ce1842421-316934250.ap-southeast-2.elb.amazonaws.com', port=80): Read timed out. (read timeout=0.5)
+INFO:root:Connection timeout.
+CRITICAL:root:Connection Timeout: HTTPConnectionPool(host='a7a350f9da27e4ec98d9489ce1842421-316934250.ap-southeast-2.elb.amazonaws.com', port=80): Read timed out. (read timeout=0.5)
+INFO:root:Connection timeout.
+CRITICAL:root:Connection Timeout: HTTPConnectionPool(host='a7a350f9da27e4ec98d9489ce1842421-316934250.ap-southeast-2.elb.amazonaws.com', port=80): Read timed out. (read timeout=0.5)
+INFO:root:Connection timeout.
+INFO:root:Healthy
+INFO:root:Healthy
+INFO:root:Healthy
