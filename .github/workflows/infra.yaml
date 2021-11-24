@@ -85,3 +85,26 @@ jobs:
 
       - name: Apply Terraform
         run: scripts/terraform_apply.sh
+
+  apply-k8s-manifests:
+    needs: apply-infra
+    runs-on: ubuntu-latest
+    env:
+      ENV: dev
+      VPC_ID: vpc-0aae7159e04d55201
+      CLUSTER_NAME: hello-world-dev
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Deploy k8s manifests
+        run: |
+          aws eks update-kubeconfig --name  ${{ env.CLUSTER_NAME }} --region ${{ env.REGION }}
+          kubectl apply -f k8s/
