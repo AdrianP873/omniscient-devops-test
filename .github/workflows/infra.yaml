@@ -1,0 +1,62 @@
+name: hello-world-infra
+on:
+  push:
+    paths:
+      - 'infra/**'
+
+  workflow_dispatch:
+    home:
+      required: false
+      default: "Trigger"
+      description: "Enable manual triggers"
+
+env:
+  REGION: ap-southeast-2
+  APPLICATION_NAME: hello-world
+
+jobs:
+  validate-infra:
+    runs-on: ubuntu-latest
+    env:
+      ENV: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: v1.0
+
+      - name: Format Terraform
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Validate Terraform
+        run: scripts/terraform_validate.sh
+
+  plan-infra:
+    needs: validate-infra
+    runs-on: ubuntu-latest
+    env:
+      ENV: dev
+      VPC_ID: vpc-0aae7159e04d55201
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.REGION }}
+
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: v1.0
+
+      - name: Plan Terraform
+        run: scripts/terraform_plan.sh
