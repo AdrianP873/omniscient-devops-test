@@ -1,0 +1,9 @@
+cluster_name = "hello-world-dev"
+code_owner  = "Adrian"
+environment = "dev"
+region      = "ap-southeast-2"
+service     = "hello-world"
+repository  = "omniscient-devops-test"
+node_group_desired_capacity = 1
+node_group_max_capacity     = 1
+node_group_min_capacity     = 1
