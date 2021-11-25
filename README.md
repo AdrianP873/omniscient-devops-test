@@ -1,4 +1,7 @@
 # omniscient-devops-test
+
+Note: I've torn down the infrastructure.
+
 Hello World application deployed onto EKS, with period health check script. 
 
 You can access the Hello World application via the ELB DNS name at a7a350f9da27e4ec98d9489ce1842421-316934250.ap-southeast-2.elb.amazonaws.com/hello
